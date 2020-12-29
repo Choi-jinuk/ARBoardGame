@@ -26,11 +26,13 @@ public class PhotonTest : MonoBehaviour
         }
         else 
         {
+            playerList.text = "";
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 playerList.text += PhotonNetwork.PlayerList.GetValue(i) + "\n";
+              
             }
-
+            length = PhotonNetwork.PlayerList.Length;
         }
        
 
