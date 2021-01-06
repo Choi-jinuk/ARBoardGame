@@ -1,14 +1,20 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhotonTest : MonoBehaviour
+public class PhotonTest : MonoBehaviourPunCallbacks
 {
 
     public Text playerList;
-    int length =1;
+
+    public Transform[] spots;
+    public GameObject pig;
+    public Transform target;
+    public DefaultTrackableEventHandler trackable;
+    int length = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +39,16 @@ public class PhotonTest : MonoBehaviour
               
             }
             length = PhotonNetwork.PlayerList.Length;
+
+            if (spots.Length >= length)
+            {
+                Debug.Log("create Player");
+                GameObject player = Instantiate(pig, spots[length-1]);
+                player.GetComponent<MeshRenderer>().enabled = trackable.isTrackingFound;
+                
+                player.transform.parent = target.transform;
+                player.GetComponent<PlayerNickName>().NickName.text = PhotonNetwork.PlayerList.GetValue(length - 1) + "";
+            }
         }
        
 
